@@ -61,15 +61,13 @@ function getDateDiffInDays(dateA, dateB) {
 }
 
 function displayRemainingDays(days) {
-  if(days > 0) {
+  if(days >= 0) {
     var remainingDaysSpan = document.createElement('STRONG');
-    remainingDaysSpan.innerHTML = "  (Noch "+days+" Tage!)";
-    
-    document.getElementsByClassName('clearfix')[0].children[0].appendChild(remainingDaysSpan);
-  } else if (days == 0) {
-    var remainingDaysSpan = document.createElement('STRONG');
-    remainingDaysSpan.innerHTML = "  (Endlich!!!)";
-    
+    if (days == 0) {
+      remainingDaysSpan.innerHTML = "  (Endlich!!!)";
+    } else {
+      remainingDaysSpan.innerHTML = "  (Noch "+days+" Tage!)";
+    }
     document.getElementsByClassName('clearfix')[0].children[0].appendChild(remainingDaysSpan);
   }
 }
