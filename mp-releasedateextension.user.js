@@ -35,13 +35,12 @@ var diffDays = getDateDiffInDays(releaseDate, today);
 displayRemainingDays(diffDays);
 
 function getReleaseDate() {
-  var movieDataWrapper = document.getElementsByClassName('clearfix')[0];
+  var movieDataWrapper = document.getElementsByClassName('movie--data clearfix')[0];
   if(movieDataWrapper != null) {
-    var movieData = movieDataWrapper.children[0];
-    var releaseDate = movieData.lastChild.data;
-    releaseDate = releaseDate.match(/\d\d.\d\d.\d\d\d\d/);
+    var movieData = movieDataWrapper.children;
+    var releaseDate = movieData[movieData.length-1].innerHTML;
     if(releaseDate != null) {
-      var dateSplits = releaseDate[0].split(".");
+      var dateSplits = releaseDate.split(".");
       return new Date(parseInt(dateSplits[2]), parseInt(dateSplits[1])-1, parseInt(dateSplits[0]),0,0,0,0);
     } else {
       throw new Error('getReleaseData(): no proper date found');
@@ -68,6 +67,6 @@ function displayRemainingDays(days) {
     } else {
       remainingDaysSpan.innerHTML = "  (Noch "+days+" Tage!)";
     }
-    document.getElementsByClassName('clearfix')[0].children[0].appendChild(remainingDaysSpan);
+    document.getElementsByClassName('movie--data clearfix')[0].appendChild(remainingDaysSpan);
   }
 }
