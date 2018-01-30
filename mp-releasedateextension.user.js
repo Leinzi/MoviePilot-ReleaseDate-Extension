@@ -21,11 +21,11 @@
 //
 // ==UserScript==
 // @name        MoviePilot ReleaseDate-Extension
-// @namespace   http://www.moviepilot.de/
+// @namespace   https://www.moviepilot.de/
 // @description Script, mit dem die verbleibende Zeit bis zum offiziellen Kinostart angezeigt wird.
-// @include     http://www.moviepilot.de/movies/*
-// @exclude     http://www.moviepilot.de/movies/*/*
-// @version     1
+// @include     https://www.moviepilot.de/movies/*
+// @exclude     https://www.moviepilot.de/movies/*/*
+// @version     1.1
 // @grant       none
 // ==/UserScript==
 
