@@ -24,7 +24,7 @@
 // @description Script, mit dem die verbleibende Zeit bis zum offiziellen Kinostart angezeigt wird.
 // @author      kevgaar, leinzi
 // @include     /^(https?):\/\/(www\.)?(moviepilot\.de\/movies\/)([^\/]*)$/
-// @version     1.1.4
+// @version     1.2
 // @grant       none
 // ==/UserScript==
 
