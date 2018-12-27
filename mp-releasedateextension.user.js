@@ -24,14 +24,27 @@
 // @description Script, mit dem die verbleibende Zeit bis zum offiziellen Kinostart angezeigt wird.
 // @author      kevgaar, leinzi
 // @include     /^(https?):\/\/(www\.)?(moviepilot\.de\/movies\/)([^\/]*)$/
-// @version     1.1.3
+// @version     1.1.4
 // @grant       none
 // ==/UserScript==
 
-var releaseDate = getReleaseDate();
-var today = new Date();
-var diffDays = getDateDiffInDays(releaseDate, today);
-displayRemainingDays(diffDays);
+document.addEventListener("DOMContentLoaded", showRemainingDays);
+
+function showRemainingDays() {
+  var releaseDate = getReleaseDate();
+  var differenceInDays = differenceInDays(releaseDate, new Date());
+  var remainingDays = remainingDaysString(differenceInDays);
+
+  if (remainingDays !== null) {
+    var remainingDaysSpan = document.createElement('<strong>');
+    remainingDaysSpan.innerHTML = remainingDays
+    getReleaseDateElement().appendChild(remainingDaysSpan);
+  }
+}
+
+function getReleaseDateElement() {
+  return document.querySelectorAll('[itemprop="datePublished"]')[0];
+}
 
 function getReleaseDate() {
   var releaseDateElement = getReleaseDateElement();
@@ -45,10 +58,10 @@ function getReleaseDate() {
   }
 
   var dateSplits = releaseDate.split(".");
-  return new Date(parseInt(dateSplits[2]), parseInt(dateSplits[1])-1, parseInt(dateSplits[0]),0,0,0,0);
+  return new Date(parseInt(dateSplits[2]), parseInt(dateSplits[1]) - 1, parseInt(dateSplits[0]), 0, 0, 0, 0);
 }
 
-function getDateDiffInDays(dateA, dateB) {
+function differenceInDays(dateA, dateB) {
   var _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
   var utc1 = Date.UTC(dateA.getFullYear(), dateA.getMonth(), dateA.getDate());
@@ -57,18 +70,12 @@ function getDateDiffInDays(dateA, dateB) {
   return Math.floor((utc1 - utc2) / _MS_PER_DAY);
 }
 
-function displayRemainingDays(days) {
-  if(days >= 0) {
-    var remainingDaysSpan = document.createElement('STRONG');
-    if (days == 0) {
-      remainingDaysSpan.innerHTML = "  (Endlich!!!)";
-    } else {
-      remainingDaysSpan.innerHTML = "  (Noch "+days+" Tage!)";
-    }
-    getReleaseDateElement().appendChild(remainingDaysSpan);
+function remainingDaysString(days) {
+  if (days === 0) {
+    return "(Endlich!!!)";
+  } else if (days > 0) {
+    return "(Noch " + days + " Tage!)";
+  } else {
+    return null;
   }
-}
-
-function getReleaseDateElement() {
-  return document.querySelectorAll('[itemprop="datePublished"]')[0];
 }
