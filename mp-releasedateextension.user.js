@@ -24,21 +24,21 @@
 // @description Script, mit dem die verbleibende Zeit bis zum offiziellen Kinostart angezeigt wird.
 // @author      kevgaar, leinzi
 // @include     /^(https?):\/\/(www\.)?(moviepilot\.de\/movies\/)([^\/]*)$/
-// @version     1.2
+// @version     1.3
 // @grant       none
 // ==/UserScript==
 
-document.addEventListener("DOMContentLoaded", showRemainingDays);
+showRemainingDays();
 
 function showRemainingDays() {
   var releaseDate = getReleaseDate();
-  var differenceInDays = differenceInDays(releaseDate, new Date());
+  var differenceInDays = calcDifferenceInDays(releaseDate, new Date());
   var remainingDays = remainingDaysString(differenceInDays);
 
   if (remainingDays !== null) {
-    var remainingDaysSpan = document.createElement('<strong>');
-    remainingDaysSpan.innerHTML = remainingDays
-    getReleaseDateElement().appendChild(remainingDaysSpan);
+    var remainingDaysSpan = document.createElement('strong')
+    remainingDaysSpan.innerHTML = " " + remainingDays
+    getReleaseDateElement().appendChild(remainingDaysSpan)
   }
 }
 
@@ -61,7 +61,7 @@ function getReleaseDate() {
   return new Date(parseInt(dateSplits[2]), parseInt(dateSplits[1]) - 1, parseInt(dateSplits[0]), 0, 0, 0, 0);
 }
 
-function differenceInDays(dateA, dateB) {
+function calcDifferenceInDays(dateA, dateB) {
   var _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
   var utc1 = Date.UTC(dateA.getFullYear(), dateA.getMonth(), dateA.getDate());
