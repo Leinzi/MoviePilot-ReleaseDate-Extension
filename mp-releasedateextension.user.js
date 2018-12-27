@@ -21,11 +21,10 @@
 //
 // ==UserScript==
 // @name        MoviePilot ReleaseDate-Extension
-// @namespace   https://www.moviepilot.de/
 // @description Script, mit dem die verbleibende Zeit bis zum offiziellen Kinostart angezeigt wird.
-// @include     https://www.moviepilot.de/movies/*
-// @exclude     https://www.moviepilot.de/movies/*/*
-// @version     1.1
+// @author      kevgaar, leinzi
+// @include     /^(https?):\/\/(www\.)?(moviepilot\.de\/movies\/)([^\/]*)$/
+// @version     1.1.1
 // @grant       none
 // ==/UserScript==
 
@@ -52,7 +51,7 @@ function getReleaseDate() {
 
 function getDateDiffInDays(dateA, dateB) {
   var _MS_PER_DAY = 1000 * 60 * 60 * 24;
-  
+
   var utc1 = Date.UTC(dateA.getFullYear(), dateA.getMonth(), dateA.getDate());
   var utc2 = Date.UTC(dateB.getFullYear(), dateB.getMonth(), dateB.getDate());
 
