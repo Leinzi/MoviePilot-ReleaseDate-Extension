@@ -24,7 +24,7 @@
 // @description Script, mit dem die verbleibende Zeit bis zum offiziellen Kinostart angezeigt wird.
 // @author      kevgaar, leinzi
 // @include     /^(https?):\/\/(www\.)?(moviepilot\.de\/movies\/)([^\/]*)$/
-// @version     1.1.1
+// @version     1.1.2
 // @grant       none
 // ==/UserScript==
 
@@ -34,19 +34,18 @@ var diffDays = getDateDiffInDays(releaseDate, today);
 displayRemainingDays(diffDays);
 
 function getReleaseDate() {
-  var movieDataWrapper = document.getElementsByClassName('movie--data clearfix')[0];
-  if(movieDataWrapper != null) {
-    var movieData = movieDataWrapper.children;
-    var releaseDate = movieData[movieData.length-1].innerHTML;
-    if(releaseDate != null) {
-      var dateSplits = releaseDate.split(".");
-      return new Date(parseInt(dateSplits[2]), parseInt(dateSplits[1])-1, parseInt(dateSplits[0]),0,0,0,0);
-    } else {
-      throw new Error('getReleaseData(): no proper date found');
-    }
-  } else {
+  var releaseDateElement = releaseDateElement();
+  if (releaseDateElement === null) {
     throw new Error('getReleaseData(): general Data not found');
   }
+
+  var releaseDate = releaseDateElement.innerHTML;
+  if (releaseDate === null) {
+    throw new Error('getReleaseData(): no proper date found');
+  }
+
+  var dateSplits = releaseDate.split(".");
+  return new Date(parseInt(dateSplits[2]), parseInt(dateSplits[1])-1, parseInt(dateSplits[0]),0,0,0,0);
 }
 
 function getDateDiffInDays(dateA, dateB) {
@@ -66,6 +65,10 @@ function displayRemainingDays(days) {
     } else {
       remainingDaysSpan.innerHTML = "  (Noch "+days+" Tage!)";
     }
-    document.getElementsByClassName('movie--data clearfix')[0].appendChild(remainingDaysSpan);
+    releaseDateElement().appendChild(remainingDaysSpan);
   }
+}
+
+function releaseDateElement() {
+  return document.querySelectorAll('[itemprop="datePublished"]')[0];
 }
